@@ -1,9 +1,135 @@
 <html th:replace="~{base::layout(~{::section})}">
-  <body>
+  <body class="m-0 p-0">
     <section>
-      <div class="row bg-info py-5">
-        <h1 class="text-center">This is the Index Page</h1>
+
+      <!-- Hero Section -->
+      <div class="container-fluid m-0 p-0 text-white position-relative" style="height: 75%;"> 
+        <!-- Background Image -->
+        <img src="https://www.biotechpark.org.in/SilderImages/Silder2024-08-04_00-59-53.jpg"
+             alt="Biotech Park"
+             class="position-absolute top-0 start-0 w-100"
+             style="height: 100%; object-fit: cover; z-index:-1;">
+
+        <!-- Main Row -->
+        <div class="row h-100 align-items-center m-0 p-4">
+          <!-- Left Column: Text -->
+          <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0 p-4 rounded shadow-lg"
+               style="background: rgba(0, 81, 195, 0.5); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.3);">
+            <h1 class="fw-bold display-5">Functional Biotech Park In North India</h1>
+            <p class="lead">
+              Bio Tech Park is India's top research center, leading in biotechnology and scientific advancements
+            </p>
+            <button class="btn btn-success btn-lg mt-3 px-4">Explore Now</button>
+          </div>
+        </div>
+
+        <!-- Wave -->
+        <div class="position-absolute bottom-0 start-0 w-100" style="height:100px;">
+          <svg viewBox="0 0 1440 320" preserveAspectRatio="none" class="w-100 h-100">
+            <path fill="#ffffff" fill-opacity="1" 
+              d="M0,224L48,202.7C96,181,192,139,288,117.3C384,96,480,96,576,117.3C672,139,768,181,864,176C960,171,1056,117,1152,85.3C1248,53,1344,43,1392,37.3L1440,32L1440,320L0,320Z"></path>
+          </svg>
+        </div>
       </div>
+
+      <!-- Announcement Bar -->
+      <div class="container my-2">
+        <div class="d-flex">
+          <!-- Left Part -->
+          <div class="bg-success text-white px-3 d-flex align-items-center fw-bold">
+            Announcement
+          </div>
+          <!-- Right Scrolling Part -->
+          <div class="bg-primary text-white flex-grow-1">
+            <marquee behavior="scroll" direction="left" scrollamount="6" 
+                     onmouseover="this.stop();" onmouseout="this.start();" class="py-2">
+              Join our webinar on <b>Bioinformatics</b>, "Unlocking the Power of Bioinformatics," on 
+              <b>September 14th, 2024, at 11:00 AM!</b> Register here | 
+              A Webinar on <b>"Advancements in Medicinal Plant Biotechnology Research"</b> will be held on 
+              <b>September 21st, 2024, from 11:00 AM to 12:30 PM (IST).</b> Register here
+            </marquee>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full-Width Light Sky Blue Container -->
+      <div class="container-fluid" style="background-color: rgba(135, 206, 250, 0.1);">
+  <!-- Inner wrapper: width 80%, centered, padding 5 -->
+  <div class="mx-auto p-5" style="width: 95%;">
+    <h2 class="text-start fw-bold mb-0 pb-1">
+      We Cover The Whole Spectrum
+    </h2>
+    <p class="border-bottom border-primary border-4 w-25 mb-3"></p>
+
+    <div class="position-relative overflow-hidden p-3 rounded" style="background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.05)), rgba(0,0,0,0.01);">
+      <div id="cardWrapper" class="overflow-hidden">
+        <div id="cardTrack" class="d-flex  p-2 rounded">
+
+          <!-- Card 1 -->
+          <div class="col-12 col-md-3">
+            <div class="card mx-2">
+              <div class="ratio ratio-4x3">
+                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704666/hitech_ucqijs.jpg" 
+                     class="card-img-top w-100 h-100 object-fit-cover">
+              </div>
+              <div class="card-body text-center">
+                <h5>Hi-Tech Laboratories</h5>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-12 col-md-3">
+            <div class="card mx-2">
+              <div class="ratio ratio-4x3">
+                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704666/skill_vfdbrf.jpg" 
+                     class="card-img-top w-100 h-100 object-fit-cover">
+              </div>
+              <div class="card-body text-center">
+                <h5>Skill Development</h5>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-12 col-md-3">
+            <div class="card mx-2">
+              <div class="ratio ratio-4x3">
+                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704668/clean_oakuln.jpg" 
+                     class="card-img-top w-100 h-100 object-fit-cover">
+              </div>
+              <div class="card-body text-center">
+                <h5>Clean Environment</h5>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="col-12 col-md-3">
+            <div class="card mx-2">
+              <div class="ratio ratio-4x3">
+                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704666/infra_suly60.jpg" 
+                     class="card-img-top w-100 h-100 object-fit-cover">
+              </div>
+              <div class="card-body text-center">
+                <h5>Modern Infrastructure</h5>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Navigation Buttons and Indicators -->
+      <button id="prevBtn" class="btn btn-secondary rounded-circle opacity-25 position-absolute top-50 start-0 translate-middle-y">&lt;</button>
+      <button id="nextBtn" class="btn btn-secondary rounded-circle opacity-25 position-absolute top-50 end-0 translate-middle-y">&gt;</button>
+      <div id="indicators" class="text-center mt-3"></div>
+    </div>
+  </div>
+</div>
+
     </section>
+
+    <script src="/js/index.js"></script>
   </body>
 </html>
