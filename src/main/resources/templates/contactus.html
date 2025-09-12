@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base::layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enquiry Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark">
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      
+      <!-- Left Column: Contact Info + Map -->
+      <div class="col-12 col-md-4">
+        <div class="bg-white border text-dark rounded-3 shadow p-4 h-100 d-flex flex-column">
+          <h4 class="fw-bold mb-4">Let's Connect</h4>
+          
+          <p>
+            <i class="fas fa-envelope me-2 text-primary"></i>
+            <a href="mailto:adevraj934@gmail.com" class="text-decoration-none">adevraj934@gmail.com</a>
+          </p>
+          
+          <p>
+            <i class="fas fa-phone me-2 text-success"></i> 
+            +91-9110169560
+          </p>
+          
+          <p>
+            <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+            Jankipuram Biotech Park,  
+            Lucknow, Uttar Pradesh 226021, India
+          </p>
+		  
+		  <!-- Social Media Links -->
+		  <div class="d-flex gap-3 mt-3">
+		    <a href="https://www.facebook.com/" target="_blank" class="text-primary fs-4">
+		      <i class="fa-brands fa-facebook"></i>
+		    </a>
+		    <a href="https://www.instagram.com/" target="_blank" class="text-danger fs-4">
+		      <i class="fa-brands fa-instagram"></i>
+		    </a>
+		    <a href="https://twitter.com/" target="_blank" class="text-dark fs-4">
+		      <i class="fa-brands fa-x-twitter"></i>
+		    </a>
+		  </div>
+
+          <!-- Google Map -->
+          <div class="ratio ratio-4x3 mt-3">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3557.782855993776!2d80.95271888053027!3d26.910385716438363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399957b90f3c39ef%3A0xdf9814e6dc29867b!2sJankipuram%20Biotech%20Park!5e0!3m2!1sen!2sin!4v1757687466806!5m2!1sen!2sin" 
+              style="border:0;" allowfullscreen="" loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Contact Form -->
+      <div class="col-12 col-md-8">
+        <div class="bg-white border text-dark rounded-3 shadow p-4">
+          <h2 class="fw-bold text-center mb-4">Contact Us</h2>
+          
+		  <div id="flashMessages" style="display:none"
+		       th:attr="data-success=${success}, data-error=${error}">
+		  </div>
+		  
+		  
+          <!-- Contact Form -->
+          <form id="contactForm" th:action="@{/submit-enquiry}" method="post">
+            
+            <div class="mb-3">
+              <label for="name" class="form-label">Name :</label>
+              <input type="text" id="name" name="name" class="form-control bg-light border text-dark" placeholder="Enter your name">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Gender :</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                <label class="form-check-label" for="male">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                <label class="form-check-label" for="female">Female</label>
+              </div>
+			  <div class="form-check form-check-inline">
+			    <input class="form-check-input" type="radio" name="gender" id="other" value="Other">
+			    <label class="form-check-label" for="other">Other</label>
+			  </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="contactNo" class="form-label">Contact Number :</label>
+              <input type="tel" id="contactNo" name="contactNo" class="form-control bg-light border text-dark" placeholder="Enter contact number">
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email :</label>
+              <input type="email" id="email" name="email" class="form-control bg-light border text-dark" placeholder="Enter your email">
+            </div>
+
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subject :</label>
+              <input type="text" id="subject" name="subject" class="form-control bg-light border text-dark" placeholder="Subject">
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Message :</label>
+              <textarea id="message" name="message" class="form-control bg-light border text-dark" rows="4" placeholder="Write your message"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+              <i class="fas fa-paper-plane me-2"></i>Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<script src="/js/contact.js"></script>
+</body>
+</html>
