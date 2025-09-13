@@ -32,95 +32,38 @@
         </div>
       </div>
 
-      <!-- Announcement Bar -->
-      <div class="container my-2">
-        <div class="d-flex">
-          <!-- Left Part -->
-          <div class="bg-success text-white px-3 d-flex align-items-center fw-bold">
-            Announcement
-          </div>
-          <!-- Right Scrolling Part -->
-          <div class="bg-primary text-white flex-grow-1">
-            <marquee behavior="scroll" direction="left" scrollamount="6" 
-                     onmouseover="this.stop();" onmouseout="this.start();" class="py-2">
-              Join our webinar on <b>Bioinformatics</b>, "Unlocking the Power of Bioinformatics," on 
-              <b>September 14th, 2024, at 11:00 AM!</b> Register here | 
-              A Webinar on <b>"Advancements in Medicinal Plant Biotechnology Research"</b> will be held on 
-              <b>September 21st, 2024, from 11:00 AM to 12:30 PM (IST).</b> Register here
-            </marquee>
-          </div>
-        </div>
-      </div>
+	  <!-- Announcement Bar -->
+	  <div class="container my-2">
+	    <div class="d-flex">
+	      <!-- Left Part -->
+	      <div class="bg-success text-white px-3 d-flex align-items-center fw-bold">
+	        Announcement
+	      </div>
+	      <!-- Right Scrolling Part -->
+	      <div class="bg-primary text-white flex-grow-1">
+	        <marquee behavior="scroll" direction="left" scrollamount="6" 
+	                 onmouseover="this.stop();" onmouseout="this.start();" class="py-2">
+	          Join our webinar on <b>Bioinformatics</b>, "Unlocking the Power of Bioinformatics," on 
+	          <b>September 14th, 2024, at 11:00 AM!</b> 
+	          <a href="https://example.com/webinar1" target="_blank" class="text-danger text-decoration-underline"><b>Register here</b></a> | 
+	          A Webinar on <b>"Advancements in Medicinal Plant Biotechnology Research"</b> will be held on 
+	          <b>September 21st, 2024, from 11:00 AM to 12:30 PM (IST).</b> 
+	          <a href="https://example.com/webinar2" target="_blank" class="text-danger text-decoration-underline"><b>Register here</b></a>
+	        </marquee>
+	      </div>
+	    </div>
+	  </div>
 
-      <!-- Full-Width Light Sky Blue Container -->
-      <div class="container-fluid" style="background-color: rgba(135, 206, 250, 0.1);">
-  <!-- Inner wrapper: width 80%, centered, padding 5 -->
+
+	 <div class="container-fluid" style="background-color: rgba(135, 206, 250, 0.1);">
   <div class="mx-auto p-5" style="width: 95%;">
-    <h2 class="text-start fw-bold mb-0 pb-1">
-      We Cover The Whole Spectrum
-    </h2>
+    <h2 class="text-start fw-bold mb-0 pb-1">We Cover The Whole Spectrum</h2>
     <p class="border-bottom border-primary border-4 w-25 mb-3"></p>
-
-    <div class="position-relative overflow-hidden p-3 rounded" style="background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.05)), rgba(0,0,0,0.01);">
+    <div class="position-relative overflow-hidden p-3 rounded"
+         style="background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.05)), rgba(0,0,0,0.01);">
       <div id="cardWrapper" class="overflow-hidden">
-        <div id="cardTrack" class="d-flex  p-2 rounded">
-
-          <!-- Card 1 -->
-          <div class="col-12 col-md-3">
-            <div class="card mx-2">
-              <div class="ratio ratio-4x3">
-                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704666/hitech_ucqijs.jpg" 
-                     class="card-img-top w-100 h-100 object-fit-cover">
-              </div>
-              <div class="card-body text-center">
-                <h5>Hi-Tech Laboratories</h5>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="col-12 col-md-3">
-            <div class="card mx-2">
-              <div class="ratio ratio-4x3">
-                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704666/skill_vfdbrf.jpg" 
-                     class="card-img-top w-100 h-100 object-fit-cover">
-              </div>
-              <div class="card-body text-center">
-                <h5>Skill Development</h5>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="col-12 col-md-3">
-            <div class="card mx-2">
-              <div class="ratio ratio-4x3">
-                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704668/clean_oakuln.jpg" 
-                     class="card-img-top w-100 h-100 object-fit-cover">
-              </div>
-              <div class="card-body text-center">
-                <h5>Clean Environment</h5>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="col-12 col-md-3">
-            <div class="card mx-2">
-              <div class="ratio ratio-4x3">
-                <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757704666/infra_suly60.jpg" 
-                     class="card-img-top w-100 h-100 object-fit-cover">
-              </div>
-              <div class="card-body text-center">
-                <h5>Modern Infrastructure</h5>
-              </div>
-            </div>
-          </div>
-
-        </div>
+        <div id="cardTrack" class="d-flex p-2 rounded"></div>
       </div>
-
-      <!-- Navigation Buttons and Indicators -->
       <button id="prevBtn" class="btn btn-secondary rounded-circle opacity-25 position-absolute top-50 start-0 translate-middle-y">&lt;</button>
       <button id="nextBtn" class="btn btn-secondary rounded-circle opacity-25 position-absolute top-50 end-0 translate-middle-y">&gt;</button>
       <div id="indicators" class="text-center mt-3"></div>
@@ -128,8 +71,134 @@
   </div>
 </div>
 
-    </section>
 
-    <script src="/js/index.js"></script>
+	  
+<!-- About Biotech Park Section -->
+<div class="container-fluid d-flex align-items-center p-5" 
+     style="background: linear-gradient(to right, rgb(0,81,195), rgb(15,106,3)); 
+            width:100%; height:70vh; margin:0; padding:0;">
+  <div class="row w-100 m-0 p-0 text-white">
+    
+    <!-- Left Column -->
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-4">
+      <h3 class="fw-bold mb-3">About Biotech Park</h3>
+      <p class="pt-3 mt-0"
+         style="line-height:1.5; font-weight:400; font-size:1rem; 
+                text-align:justify; border-top:0.5px solid rgba(255,255,255,0.2); padding-top:15px;">
+        Welcome to Bio Tech Lucknow, India’s premier research center dedicated to pioneering advancements in biotechnology. As the nation’s number one research hub, we are at the forefront of innovative scientific research, driving breakthroughs that shape the future of healthcare, agriculture, and environmental sustainability. Our state-of-the-art facilities and world-class laboratories are staffed by a team of distinguished scientists and researchers committed to excellence. At Bio Tech Lucknow, we focus on cutting-edge research in genomics, bioinformatics, and molecular biology, striving to translate scientific discoveries into practical solutions that benefit society. We pride ourselves on fostering a collaborative environment that encourages creativity and innovation. Our partnerships with leading academic institutions, industry leaders, and government agencies enable us to stay ahead in the rapidly evolving field of biotechnology. Join us in our mission to push the boundaries of science and improve the quality of life through groundbreaking research and sustainable technological advancements. Bio Tech Lucknow is not just a research center; it is a beacon of progress and a catalyst for change in the biotech landscape of India.
+      </p>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-12 col-md-5 d-flex justify-content-center align-items-center py-1">
+      <div class="ratio ratio-16x9 w-100 ">
+        <iframe 
+          src="https://www.youtube.com/embed/n4XnjmavROw" 
+          title="Virtual Tour of Bio Tech Park" 
+          frameborder="0" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Our Mentors Section -->
+<div class="py-5" style="background-color: rgba(135,206,250,0.1);">
+  <div class="container">
+    <!-- Heading -->
+    <h1 class="fw-bold text-start mb-5">
+      Our Mentors
+      <div class="border-bottom border-primary border-3 mt-2" style="width:80px;"></div>
+    </h1>
+
+    <!-- Mentors Cards -->
+    <div class="row justify-content-center g-4">
+
+      <!-- Reusable style: images 260×260 -->
+      <!-- Card 1 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-lg border-0 p-3 text-center h-100">
+          <div class="rounded-circle border border-success p-2 mx-auto" style="width: 260px; height: 260px;">
+            <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757765564/Smt._Ananfiben_Patel_cirpxh.jpg" 
+                 alt="Smt. Anandiben Patel"
+                 class="rounded-circle w-100 h-100"
+                 style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="fw-bold text-primary mb-1">Smt. Anandiben Patel</h5>
+            <p class="mb-0 fw-semibold">Hon’ble Governor</p>
+            <p class="mb-0 fw-semibold">Uttar Pradesh</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-lg border-0 p-3 text-center h-100">
+          <div class="rounded-circle border border-success p-2 mx-auto" style="width: 260px; height: 260px;">
+            <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757765562/Shri_Yogi_Adityanath_mjkaqc.jpg" 
+                 alt="Shri Yogi Adityanath"
+                 class="rounded-circle w-100 h-100"
+                 style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="fw-bold text-primary mb-1">Shri Yogi Adityanath</h5>
+            <p class="mb-0 fw-semibold">Hon’ble Chief Minister</p>
+            <p class="mb-0 fw-semibold">Uttar Pradesh</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-lg border-0 p-3 text-center h-100">
+          <div class="rounded-circle border border-success p-2 mx-auto" style="width: 260px; height: 260px;">
+            <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757765562/Shri_Anil_Kumar_iqta8g.jpg" 
+                 alt="Shri Anil Kumar"
+                 class="rounded-circle w-100 h-100"
+                 style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="fw-bold text-primary mb-1">Shri Anil Kumar</h5>
+            <p class="mb-0 fw-semibold">Hon’ble Cabinet Minister</p>
+            <p class="mb-0 fw-semibold">DST, GoUP</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-lg border-0 p-3 text-center h-100">
+          <div class="rounded-circle border border-success p-2 mx-auto" style="width: 260px; height: 260px;">
+            <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1757765563/Prof._J._P._Pandey_yi0n7u.jpg" 
+                 alt="Prof. J. P. Pandey"
+                 class="rounded-circle w-100 h-100"
+                 style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="fw-bold text-primary mb-1">Prof. J. P. Pandey</h5>
+            <p class="mb-0 fw-semibold">CEO</p>
+            <p class="mb-0 fw-semibold">Biotech Park, Lucknow</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+</section>
+
+    
   </body>
 </html>
