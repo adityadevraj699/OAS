@@ -128,3 +128,23 @@ document.addEventListener("DOMContentLoaded", function () {
   createIndicators();
   updateSlide();
 });
+
+
+
+
+
+//--------Agriculture Services Industry------------
+const serviceItems = document.querySelectorAll('.service-item');
+const serviceImage = document.getElementById('service-image');
+
+serviceItems.forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    const newImg = item.getAttribute('data-img');
+    serviceImage.style.opacity = 0;       // fade out
+    setTimeout(() => {
+      serviceImage.src = newImg;
+      serviceImage.style.opacity = 1;     // fade in
+    }, 250);
+  });
+});
+

@@ -1,0 +1,18 @@
+.service-text {
+  display: inline-block;           /* scale works on inline-block */
+  color: #000;                     /* default black */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.service-item:hover .service-text {
+  color: #0d6efd;                  /* Bootstrap blue */
+  transform: scale(1.05);          /* only text scales */
+}
+
+/* Service image: fixed height, smooth fade */
+.service-img {
+  height: 350px;                   /* fixed height */
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
