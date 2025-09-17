@@ -1,0 +1,14 @@
+.navbar-nav .nav-link {
+  position: relative;
+  padding: 0 12px; /*左右 spacing equal*/
+}
+
+.navbar-nav .nav-link:not(:last-child)::after {
+  content: "|";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%); /* center vertically */
+  color: #fff; /* white separator */
+  font-weight: normal;
+}

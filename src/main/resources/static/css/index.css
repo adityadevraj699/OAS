@@ -16,3 +16,49 @@
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
+
+
+
+.carousel-item {
+  display: flex;
+}
+
+.carousel-item img {
+  width: 20%;  /* 4 images per slide => 100/4 */
+  object-fit: cover;
+  padding: 0 5px;
+}
+
+
+/* Image container ki height fixed rakhi gayi hai */
+.card-img-container {
+  height: 180px;           /* yaha height control karein */
+  padding: 4px;            /* image ke around spacing */
+  background-color: #fff;  /* optional: white background for contrast */
+}
+.card-img-container img {
+  height: 90%;
+  width: 95%;
+  object-fit: cover;       /* image crop/scale properly */
+  border-radius: 8px;
+}
+
+/* Text container ka padding aur background */
+.card-text-container {
+  padding: 6px 4px;
+  background-color: #fff; /* light gray bg for separation */
+  min-height: 65px;         /* sab cards ka text area equal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-text-container h6 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+
+
+
+
+

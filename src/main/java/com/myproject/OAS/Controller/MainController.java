@@ -25,6 +25,21 @@ public class MainController {
     public String showIndex() {
         return "index";
     }
+    
+    @GetMapping("/login")
+    public String showlogin() {
+        return "login";
+    }
+    
+    @GetMapping("/register")
+    public String showregister() {
+        return "register";
+    }
+    @GetMapping("/forgot-password")
+    public String showforgotPassword() {
+        return "forgot-password";
+    }
+
 
     @GetMapping("/ContactUs")
     public String showContactUs() {
