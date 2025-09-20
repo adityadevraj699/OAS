@@ -13,13 +13,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.OAS.Model.Enquiry;
+import com.myproject.OAS.Model.Users;
+import com.myproject.OAS.Model.Users.UserRole;
+import com.myproject.OAS.Model.Users.UserStatus;
 import com.myproject.OAS.Repository.EnquiryRepository;
+import com.myproject.OAS.Repository.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
 
     @Autowired
     private EnquiryRepository enquiryRepository;
+    @Autowired
+    private UserRepository userRepo;
 
     @GetMapping("/")
     public String showIndex() {
@@ -29,6 +38,61 @@ public class MainController {
     @GetMapping("/login")
     public String showlogin() {
         return "login";
+    }
+    
+    @PostMapping("/login")
+    public String Login(RedirectAttributes attributes, HttpServletRequest request, HttpSession session) 
+    {
+    	try {
+    		
+    		String userType = request.getParameter("userType");
+    		String userID = request.getParameter("userID");
+    		String password = request.getParameter("password");
+    		
+    		if(userType.equals("ADMIN") && userRepo.existsByEmail(userID)) {
+    		
+    			Users admin = userRepo.findByEmail(userID);
+    			if(password.equals(admin.getPassword()) && admin.getRole().equals(UserRole.ADMIN)) {
+    				
+    				session.setAttribute("loggedInAdmin", admin);
+    				return "redirect:/Admin/Dashboard";
+//    				System.out.println(" Valid Admin");
+    			}
+    			else {
+    				attributes.addFlashAttribute("msg", "Invalid User or Password");
+    			}
+    		}
+    		else if (userType.equals("STUDENT") && userRepo.existsByRollNo(userID)) {
+        		Users student = userRepo.findByRollNo(userID);
+        		if(password.equals(student.getPassword()) && student.getRole().equals(UserRole.STUDENT)) {
+        			if( student.getStatus().equals(UserStatus.APPROVED)) {
+        				session.setAttribute("loggedInstudent", student);
+            			System.out.println(" Valid Student");
+            			//return "redirect:/Student/Dashboard";
+        			}
+        			else if(student.getStatus().equals(UserStatus.PENDING)) {
+        				session.setAttribute("NewStudent", student);
+        				return "redirect:/Registration";
+        			}
+        			else if(student.getStatus().equals(UserStatus.DISABLED)) {
+        				attributes.addFlashAttribute("msg", "Login DIsabled, Please Contact Admin");
+        			}
+        			
+        			
+        		}
+        		else {
+    				attributes.addFlashAttribute("msg", "Invalid User or Password");
+    			}
+    		}
+    		else {
+    			attributes.addFlashAttribute("msg", "User not Found!!");
+    		}
+    		
+			return "redirect:/login";
+		} catch (Exception e) {
+			attributes.addFlashAttribute("msg",e.getMessage());
+			return "redirect:/login";
+		}
     }
     
     @GetMapping("/register")
