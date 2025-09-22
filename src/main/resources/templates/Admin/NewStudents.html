@@ -1,76 +1,102 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{Admin/Adminbase::layout(~{::main})}">
-<body style="min-height:75vh; background-color:#f8f9fa;">
-<main style="min-height:75vh; display:flex; align-items:center; justify-content:center;">
-  <div class="row" style="width:100%;">
-    <div class="col-sm-10 mx-auto">
-      <div class="card shadow-lg" style="height:auto;">
-        <div class="card-header bg-primary text-center text-white">
-          <h4 class="m-0">Add New Student</h4>
-        </div>
-        <div class="card-body">
-          <form method="post">
-            <div class="row g-3">
-
-              <!-- Roll Number -->
-              <div class="col-sm-6">
-                <label class="fw-bold">Roll Number</label>
-                <input type="text" name="rollNo" class="form-control" placeholder="Enter Roll Number..." required>
-              </div>
-
-              <!-- Student Name -->
-              <div class="col-sm-6">
-                <label class="fw-bold">Full Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter Student Name..." required>
-              </div>
-
-              <!-- Program -->
-              <div class="col-sm-6">
-                <label class="fw-bold">Program / Course</label>
-                <select name="program" class="form-control" required>
-                  <option value="">--Select Program--</option>
-                  <option value="B. Pharm">B. Pharm</option>
-                  <option value="D. Pharm">D. Pharm</option>
-                  <option value="Diploma">Diploma</option>
-                </select>
-              </div>
-
-              <!-- Branch -->
-              <div class="col-sm-6">
-                <label class="fw-bold">Branch</label>
-                <input type="text" name="branch" class="form-control" placeholder="Enter Branch..." required>
-              </div>
-
-              <!-- Year -->
-              <div class="col-sm-6">
-                <label class="fw-bold">Year</label>
-                <select name="year" class="form-control" required>
-                  <option value="">--Select Year--</option>
-                  <option value="1st Year">1st Year</option>
-                  <option value="2nd Year">2nd Year</option>
-                  <option value="3rd Year">3rd Year</option>
-                  <option value="4th Year">4th Year</option>
-                </select>
-              </div>
-
-              <!-- Email -->
-              <div class="col-sm-6">
-                <label class="fw-bold">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="Enter Email..." required>
-              </div>
-
-            </div>
-
-            <!-- Submit Button -->
-            <div class="text-center mt-4">
-              <button type="submit" class="btn btn-primary px-5">Add Student</button>
-            </div>
-
-          </form>
-        </div>
+<body>
+<main>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card-header bg-primary">
+      <h4 class="text-center text-white m-0">Manage New Student</h4>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Sr. No.</th>
+              <th>Enrollment No.</th>
+              <th>Name</th>
+              <th>F'Name</th>
+              <th>M'Name</th>
+              <th>Gender</th>
+              <th>Contact No.</th>
+              <th>Email</th>
+              <th>Reg Date</th>
+              <th>Course</th>
+              <th>Branch</th>
+              <th>Year</th>
+              <th>Payment Receipt</th>
+              <th>UTR No.</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="student, stat : ${newStudent}">
+              <td th:text="${stat.index + 1}">1</td>
+              <td th:text="${student.rollNo}">Enrollment No.</td>
+              <td th:text="${student.name}">Name</td>
+              <td th:text="${student.fatherName == null ? 'No Records' : student.fatherName}">F'Name</td>
+              <td th:text="${student.motherName == null ? 'No Records' : student.motherName}">M'Name</td>
+              <td th:text="${student.gender == null ? 'No Records' : student.gender}">Gender</td>
+              <td th:text="${student.contactNo}">Contact No.</td>
+              <td th:text="${student.email}">Email</td>
+              <td th:text="${#temporals.format(student.regDate, 'dd-MM-yyyy HH:mm')}">Reg Date</td>
+              <td th:text="${student.program}">Course</td>
+              <td th:text="${student.branch}">Branch</td>
+              <td th:text="${student.year}">Year</td>
+              <td>
+                <a th:if="${student.paymentImage != null}" 
+                   th:href="@{'/PaymentSlip/'+ ${student.paymentImage}}" 
+                   target="_blank">View</a>
+                <span th:if="${student.paymentImage == null}">N/A</span>
+              </td>
+              <td th:text="${student.utrNo == null ? 'N/A' : student.utrNo}">UTR No.</td>
+              <td>
+                <!-- SweetAlert style button -->
+                <a href="#" 
+                   class="btn btn-warning btn-sm approve-btn" 
+                   th:data-url="@{ApproveStudent(id=${student.id})}">
+                   Pending
+                </a>
+              </td>
+            </tr>
+            <tr th:if="${newStudent.isEmpty()}">
+              <td colspan="15" class="text-center">No Students Found.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+</div>
+
+<!-- SweetAlert2 Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const approveButtons = document.querySelectorAll('.approve-btn');
+
+  approveButtons.forEach(button => {
+    button.addEventListener('click', function (e) {
+      e.preventDefault();
+      const approveUrl = this.getAttribute('data-url');
+
+      Swal.fire({
+        title: 'Approve Student?',
+        text: "Do you really want to approve this student?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, approve',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = approveUrl;
+        }
+      });
+    });
+  });
+});
+</script>
 </main>
 </body>
 </html>

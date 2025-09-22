@@ -46,10 +46,12 @@ public class AdminController {
 	}
 	
 	@GetMapping("/NewStudents")
-	public String showNewStudents() {
+	public String showNewStudents(Model model) {
 		if(session.getAttribute("loggedInAdmin") == null) {
 			return "redirect:/login";
 		}
+		List<Users> newStudent = userRepo.findAllByRoleAndStatus(UserRole.STUDENT, UserStatus.PENDING);
+		model.addAttribute("newStudent", newStudent);
 	    return "Admin/NewStudents";
 	}
 	
@@ -107,6 +109,30 @@ public class AdminController {
 		return "redirect:/Admin/Enquiry";
 		
 	}
+	
+	@GetMapping("/ApproveStudent")
+	public String approveStudent(@RequestParam("id") long id, RedirectAttributes attr) {
+	    if (session.getAttribute("loggedInAdmin") == null) {
+	        return "redirect:/login";
+	    }
+	    try {
+	        Users student = userRepo.findById(id)
+	                .orElseThrow(() -> new IllegalArgumentException("Invalid student ID: " + id));
+
+	        student.setStatus(UserStatus.APPROVED);
+
+	        userRepo.save(student);
+
+	        attr.addFlashAttribute("mgs", "Student " + student.getName() + " approved successfully.");
+	    } catch (Exception e) {
+	        attr.addFlashAttribute("mgs", "Error approving student: " + e.getMessage());
+	    }
+
+	    return "redirect:/Admin/NewStudents";
+	}
+
+	
+	
 	
 	
 	
