@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{Admin/Adminbase::layout(~{::main})}">
+<body>
+<main>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h4 class="text-center text-white m-0">Manage Enquiries</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Name</th>
+                  <th>Contact No</th>
+                  <th>Email</th>
+                  <th>Gender</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                  <th>Enquiry Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="enq, stat : ${enquiries}">
+                  <td th:text="${stat.count}">1</td>
+                  <td th:text="${enq.name}">Name</td>
+                  <td th:text="${enq.contactNo}">Contact No</td>
+                  <td th:text="${enq.email}">Email</td>
+                  <td th:text="${enq.gender}">Gender</td>
+                  <td th:text="${enq.subject}">Subject</td>
+                  <td th:text="${enq.message}">Message</td>
+                  <td th:text="${#temporals.format(enq.enquiryDate, 'dd-MM-yyyy HH:mm')}">Enquiry Date</td>
+                  <td>
+  <a href="#" 
+     class="btn btn-danger btn-sm delete-btn" 
+     th:data-url="@{DeleteEnquiry(id=${enq.id})}">
+     Delete
+  </a>
+</td>
+
+                </tr>
+                <tr th:if="${enquiries.isEmpty()}">
+                  <td colspan="9" class="text-center">No enquiries found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+  // Wait until DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        const deleteUrl = this.getAttribute('data-url');
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this action!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirect if confirmed
+            window.location.href = deleteUrl;
+          }
+        });
+      });
+    });
+  });
+</script>
+  
+</main>
+
+</body>
+</html>

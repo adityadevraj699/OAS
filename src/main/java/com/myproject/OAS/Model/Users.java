@@ -40,6 +40,23 @@ public class Users {
 	private String password;
 	private LocalDateTime regDate;
 	
+	private String paymentImage;
+	private String utrNo;
+	
+	
+	
+	public String getPaymentImage() {
+		return paymentImage;
+	}
+	public void setPaymentImage(String paymentImage) {
+		this.paymentImage = paymentImage;
+	}
+	public String getUtrNo() {
+		return utrNo;
+	}
+	public void setUtrNo(String utrNo) {
+		this.utrNo = utrNo;
+	}
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	public enum UserRole {

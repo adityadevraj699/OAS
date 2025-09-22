@@ -1,16 +1,115 @@
 package com.myproject.OAS.Controller;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.myproject.OAS.Model.Enquiry;
+import com.myproject.OAS.Model.Users;
+import com.myproject.OAS.Model.Users.UserRole;
+import com.myproject.OAS.Model.Users.UserStatus;
+import com.myproject.OAS.Repository.EnquiryRepository;
+import com.myproject.OAS.Repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/Admin")
 public class AdminController {
+	
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
+	private EnquiryRepository enquiryRepo;
 
+	
+	
 	@GetMapping("/Dashboard")
 	public String showDashboard() {
+		if(session.getAttribute("loggedInAdmin") == null) {
+			return "redirect:/login";
+		}
 		return "Admin/Dashboard";
 	}
+	
+	@GetMapping("/NewStudents")
+	public String showNewStudents() {
+		if(session.getAttribute("loggedInAdmin") == null) {
+			return "redirect:/login";
+		}
+	    return "Admin/NewStudents";
+	}
+	
+	@GetMapping("/AddStudent")
+	public String showAddStudent(Model model) {
+		if(session.getAttribute("loggedInAdmin") == null) {
+			return "redirect:/login";
+		}
+		Users student = new Users(); 
+		model.addAttribute("student", student);
+		return "Admin/AddStudent";
+	}
+	
+	@PostMapping("/AddStudent")
+	public String AddStudent(@ModelAttribute("student") Users student, RedirectAttributes attr) {
+		if(session.getAttribute("loggedInAdmin") == null) {
+			return "redirect:/login";
+		}
+		try {
+			if(userRepo.existsByEmail(student.getEmail())) {
+				attr.addFlashAttribute("mgs","User Already Esists"+ student.getEmail()+"!");
+				return "redirect:/Admin/AddStudent";
+			}
+			student.setPassword("Password123");
+			student.setRole(UserRole.STUDENT);
+			student.setStatus(UserStatus.PENDING);
+			student.setRollNo("MIT-"+System.currentTimeMillis());
+			student.setRegDate(LocalDateTime.now());
+			userRepo.save(student);
+			attr.addFlashAttribute("mgs", "Registration Successful, Enrollment No:" +student.getRollNo()+", Password :" + student.getPassword() +" .");
+			return "redirect:/Admin/AddStudent";
+		} catch (Exception e) {
+			attr.addFlashAttribute("mgs", "Error :"+e.getMessage());
+			return "redirect:/Admin/AddStudent";
+		}
+	}
+	
+	
+	@GetMapping("/Enquiry")
+	public String showEnquiry(Model model) {
+		if(session.getAttribute("loggedInAdmin") == null) {
+			return "redirect:/login";
+		}
+		
+		List<Enquiry> enquiries = enquiryRepo.findAll();
+		model.addAttribute("enquiries", enquiries);
+		return "Admin/Enquiry";
+	}
+	
+	
+	
+	@GetMapping("/DeleteEnquiry")
+	public String DeleteEnquiry(@RequestParam("id") long id) {
+		enquiryRepo.deleteById(id);
+		return "redirect:/Admin/Enquiry";
+		
+	}
+	
+	
+	
+
 	
 }

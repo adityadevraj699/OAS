@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{Admin/Adminbase::layout(~{::main})}">
+<body>
+<main>
+  <div class="row">
+    <div class="col-sm-10 mx-auto">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary">
+          <h4 class="text-center text-white m-0">Add New Student</h4>
+        </div>
+        <div class="card-body">
+          <form method="post" >
+            <div class="row p-4">
+              
+              <!-- Student Name -->
+              <div class="col-sm-6 mt-3">
+                <label class="fw-bold" for="name">Enter Student Name</label>
+                <input type="text" id="name" name="name" class="form-control" 
+                       placeholder="Student Name..." required>
+              </div>
+              
+              <!-- Contact Number -->
+              <div class="col-sm-6 mt-3">
+                <label class="fw-bold" for="contactNo">Enter Contact Number</label>
+                <input type="tel" id="contactNo" name="contactNo" class="form-control" 
+                       placeholder="Enter Contact No..." pattern="[0-9]{10}" required>
+              </div>
+              
+              <!-- Email -->
+              <div class="col-sm-6 mt-3">
+                <label class="fw-bold" for="email">Enter Email</label>
+                <input type="email" id="email" name="email" class="form-control" 
+                       placeholder="Enter Email..." required>
+              </div>
+              
+              <!-- Preferred Course/Program -->
+              <div class="col-sm-6 mt-3">
+                <label class="fw-bold" for="program">Select Preferred Course/Program</label>
+                <select id="program" name="program" class="form-control" required>
+                  <option value="">--Select Course--</option>
+                  <option value="M. Pharm">M. Pharm</option>
+                  <option value="B. Pharm">B. Pharm</option>
+                  <option value="D. Pharm">D. Pharm</option>
+                  <option value="Diploma">Diploma</option>
+                </select>
+              </div>
+              
+              <div class="col-sm-6 mt-3">
+                <label class="fw-bold" for="branch">Select Branch</label>
+                <select id="program" name="branch" class="form-control" required>
+                  <option value="">--Select Branch--</option>
+                  <option value="Pharmaceutical Chemistry">Pharmaceutical Chemistry</option>
+                  <option value="Pharmacology">Pharmacology</option>
+                  <option value="Clinical Pharmacy">Clinical Pharmacy</option>
+                  <option value="Industrial Pharmacy">Industrial Pharmacy</option>
+                </select>
+              </div>
+              
+              <div class="col-sm-6 mt-3">
+                <label class="fw-bold" for="year">Select Year</label>
+                <select id="program" name="year" class="form-control" required>
+                  <option value="">--Select Year--</option>
+                  <option value="First year">First year</option>
+                  <option value="Second year">Second year</option>
+                  <option value="Third year">Third year</option>
+                  <option value="Fourth year">Fourth year</option>
+                </select>
+              </div>
+
+
+              <!-- Submit Button -->
+              <div class="col-12 mt-4 text-center">
+                <button type="submit" class="btn btn-primary mx-auto px-4">Add Student</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
