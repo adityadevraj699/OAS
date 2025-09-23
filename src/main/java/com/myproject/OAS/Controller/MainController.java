@@ -1,12 +1,19 @@
 package com.myproject.OAS.Controller;
 
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +36,13 @@ public class MainController {
     private EnquiryRepository enquiryRepository;
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+	private HttpSession session;
+    
+    @Autowired
+    private Cloudinary cloudinary;
+
 
     @GetMapping("/")
     public String showIndex() {
@@ -67,12 +81,12 @@ public class MainController {
         		if(password.equals(student.getPassword()) && student.getRole().equals(UserRole.STUDENT)) {
         			if( student.getStatus().equals(UserStatus.APPROVED)) {
         				session.setAttribute("loggedInstudent", student);
-            			System.out.println(" Valid Student");
-            			//return "redirect:/Student/Dashboard";
+            			//System.out.println(" Valid Student");
+            			return "redirect:/Student/Dashboard";
         			}
         			else if(student.getStatus().equals(UserStatus.PENDING)) {
         				session.setAttribute("NewStudent", student);
-        				return "redirect:/Registration";
+        				return "redirect:register";
         			}
         			else if(student.getStatus().equals(UserStatus.DISABLED)) {
         				attributes.addFlashAttribute("msg", "Login DIsabled, Please Contact Admin");
@@ -96,9 +110,64 @@ public class MainController {
     }
     
     @GetMapping("/register")
-    public String showregister() {
+    public String showRegister(Model model) {
+        if (session.getAttribute("NewStudent") == null) {
+            return "redirect:/login";
+        }
+
+        Users student = (Users) session.getAttribute("NewStudent");
+        model.addAttribute("student", student);
         return "register";
     }
+
+   @PostMapping("/register")
+public String submitRegister(HttpServletRequest request,
+                             @RequestParam("paymentImage") MultipartFile file) {
+
+    // Fetch session student
+    Users existingStudent = (Users) session.getAttribute("NewStudent");
+    if (existingStudent == null) {
+        return "redirect:/login";
+    }
+
+    // Instead of creating new user, update the existing one
+    Users user = existingStudent;
+
+    // Update fields from form
+    user.setName(request.getParameter("name"));
+    user.setProgram(request.getParameter("program"));
+    user.setBranch(request.getParameter("branch"));
+    user.setEmail(request.getParameter("email"));
+    user.setContactNo(request.getParameter("contactNo"));
+    user.setFatherName(request.getParameter("fatherName"));
+    user.setMotherName(request.getParameter("motherName"));
+    user.setAddress(request.getParameter("address"));
+    user.setUtrNo(request.getParameter("utrNo"));
+
+    // Handle file upload
+    if (file != null && !file.isEmpty()) {
+        try {
+            Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                    ObjectUtils.asMap("folder", "payment_images"));
+            String imageUrl = uploadResult.get("secure_url").toString();
+            user.setPaymentImage(imageUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Save the updated user (Hibernate will update existing record)
+    userRepo.save(user);
+
+    // Update session
+    session.setAttribute("NewStudent", user);
+
+    return "redirect:/login";
+}
+
+
+
+
     @GetMapping("/forgot-password")
     public String showforgotPassword() {
         return "forgot-password";
@@ -139,6 +208,7 @@ public Map<String,String> submitEnquiry(@RequestParam String name,
     }
     return resp;
 }
+  
 
 
 

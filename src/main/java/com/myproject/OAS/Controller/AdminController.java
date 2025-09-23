@@ -20,7 +20,10 @@ import com.myproject.OAS.Model.Users.UserStatus;
 import com.myproject.OAS.Repository.EnquiryRepository;
 import com.myproject.OAS.Repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
+
 
 @Controller
 @RequestMapping("/Admin")
@@ -133,6 +136,58 @@ public class AdminController {
 
 	
 	
+	@GetMapping("/ChangePassword")
+	public String ShowChangePassword()
+	{
+		if (session.getAttribute("loggedInAdmin") == null) {
+			return "redirect:/login";
+		}
+		return "Admin/ChangePassword";
+	}
+	
+	@PostMapping("/ChangePassword")
+	public String changePassword(RedirectAttributes attributes, HttpServletRequest request) {
+		String oldPassword = request.getParameter("oldPassword");
+		String newPassword = request.getParameter("newPassword");
+		String confirmPassword = request.getParameter("confirmPassword");
+		try {
+			if (!newPassword.equals(confirmPassword)) {
+				attributes.addFlashAttribute("msg", "New Password and Confirm Password are not same.");
+				return "redirect:/Admin/ChangePassword";
+			}
+			
+			
+            Users admin = (Users) session.getAttribute("loggedInAdmin");
+			
+			if (newPassword.equals(admin.getPassword())) {
+				attributes.addFlashAttribute("msg", "New Password and Old Password can not be same.");
+				return "redirect:/Admin/ChangePassword";
+			}
+             if (oldPassword.equals(admin.getPassword())) {
+				
+				admin.setPassword(confirmPassword);
+				userRepo.save(admin);
+				session.invalidate();
+				attributes.addFlashAttribute("msg", "Password Successfully Channged");
+				return "redirect:/login";
+			}
+			else {
+				attributes.addFlashAttribute("msg", "Invalid Old Password!!!");
+			}
+			return "redirect:/login";
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "redirect:Admin/ChangePassword";
+		}
+	}
+	
+	
+	@GetMapping("/logout")
+	public String logout(RedirectAttributes attributes) {
+		session.invalidate();
+		attributes.addFlashAttribute("msg", "Successfully Logout!");
+		return "redirect:/login";
+	}
 	
 	
 	

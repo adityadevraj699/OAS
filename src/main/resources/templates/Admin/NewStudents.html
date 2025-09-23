@@ -44,8 +44,9 @@
               <td th:text="${student.year}">Year</td>
               <td>
                 <a th:if="${student.paymentImage != null}" 
-                   th:href="@{'/PaymentSlip/'+ ${student.paymentImage}}" 
-                   target="_blank">View</a>
+   th:href="${student.paymentImage}" 
+   target="_blank">View</a>
+
                 <span th:if="${student.paymentImage == null}">N/A</span>
               </td>
               <td th:text="${student.utrNo == null ? 'N/A' : student.utrNo}">UTR No.</td>
