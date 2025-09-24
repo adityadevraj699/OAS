@@ -22,27 +22,43 @@
 
             <div class="col-md-6">
               <label for="name" class="form-label">Full Name</label>
-              <input type="text" class="form-control" th:field="*{name}" placeholder="Enter full name" required>
+              <input type="text" class="form-control" th:field="*{name}" readonly placeholder="Enter full name" required>
             </div>
 
             <div class="col-md-6">
               <label for="program" class="form-label">Program</label>
-              <input type="text" class="form-control" th:field="*{program}" placeholder="Enter program" required>
+              <input type="text" class="form-control" th:field="*{program}" readonly placeholder="Enter program" required>
             </div>
 
             <div class="col-md-6">
               <label for="branch" class="form-label">Branch</label>
-              <input type="text" class="form-control" th:field="*{branch}" placeholder="Enter branch" required>
+              <input type="text" class="form-control" th:field="*{branch}" readonly placeholder="Enter branch" required>
+            </div>
+
+            <!-- Gender and Year Row -->
+            <div class="col-md-6">
+              <label for="gender" class="form-label">Gender</label>
+              <select class="form-select" th:field="*{gender}" required>
+                <option value="" disabled>Select Gender</option>
+                <option value="Male" th:selected="${student.gender == 'Male'}">Male</option>
+                <option value="Female" th:selected="${student.gender == 'Female'}">Female</option>
+                <option value="Other" th:selected="${student.gender == 'Other'}">Other</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="year" class="form-label">Year</label>
+              <input type="text" class="form-control" th:field="*{year}" readonly>
             </div>
 
             <div class="col-md-6">
               <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" th:field="*{email}" placeholder="Enter email" required>
+              <input type="email" class="form-control" th:field="*{email}" readonly placeholder="Enter email" required>
             </div>
 
             <div class="col-md-6">
               <label for="contactNo" class="form-label">Mobile Number</label>
-              <input type="tel" class="form-control" th:field="*{contactNo}" pattern="[0-9]{10}" placeholder="Enter mobile number" required>
+              <input type="tel" class="form-control" th:field="*{contactNo}" readonly pattern="[0-9]{10}" placeholder="Enter mobile number" required>
             </div>
           </div>
 
@@ -70,15 +86,30 @@
             </div>
           </div>
 
-          <div class="row g-3 mt-2">
-            <div class="col-md-12">
-              <label for="paymentImage" class="form-label">Payment Image</label>
-              <input type="file" class="form-control" name="paymentImage" id="paymentImage">
-              <div th:if="${student.paymentImage != null}" class="mt-2">
-                <img th:src="${student.paymentImage}" alt="Payment Image" style="max-width:200px;">
-              </div>
-            </div>
-          </div>
+         <div class="row g-3 mt-2">
+  <div class="col-md-12">
+    <label for="paymentImage" class="form-label">Payment Image</label>
+    <div class="d-flex align-items-start gap-3">
+      <!-- Upload input -->
+      <input type="file" class="form-control" name="paymentImage" id="paymentImage">
+
+      <!-- Uploaded image preview -->
+      <div th:if="${student.paymentImage != null}" class="d-flex flex-column align-items-center">
+        <img th:src="${student.paymentImage}" alt="Uploaded Payment Image" style="max-width:150px; border-radius:5px; border:1px solid #ccc;">
+      </div>
+
+      <!-- Fixed image from Cloudinary -->
+      <div class="d-flex flex-column align-items-center">
+        <img src="https://res.cloudinary.com/ddtcj9ks5/image/upload/v1758720714/PAYMENT_IMAGE_gi21tz.png" 
+             alt="Reference Payment Image" style="max-width:150px; border-radius:5px; border:1px solid #ccc;">
+        <div style="margin-top:5px; background-color:#28a745; color:white; padding:5px 10px; border-radius:5px; font-weight:bold;">
+          Total Payment: 45000
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
           <!-- Hidden fields for enums and date -->
           <input type="hidden" th:field="*{password}">
@@ -96,6 +127,38 @@
           </div>
         </form>
       </div>
+      
+      <input type="hidden" id="serverMessage" th:value="${msg}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const serverMessage = document.getElementById("serverMessage")?.value;
+
+  if (serverMessage && serverMessage.trim() !== "") {
+    // Lowercase version for easy keyword matching
+    const lowerMsg = serverMessage.toLowerCase();
+
+    // Determine if the message should be treated as an error
+    const isError = lowerMsg.includes('invalid') || 
+                    lowerMsg.includes('disabled') || 
+                    lowerMsg.includes('not found') || 
+                    lowerMsg.includes('wrong') || 
+                    lowerMsg.includes('failed');
+
+    Swal.fire({
+      title: 'Notification',
+      text: serverMessage,
+      icon: isError ? 'error' : 'success',
+      confirmButtonColor: '#2575fc',
+      background: '#f9f9f9',
+      color: '#333',
+      timer: 4000,
+      timerProgressBar: true
+    });
+  }
+});
+</script>
+      
     </section>
   </body>
 </html>

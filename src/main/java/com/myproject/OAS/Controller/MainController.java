@@ -116,13 +116,17 @@ public class MainController {
         }
 
         Users student = (Users) session.getAttribute("NewStudent");
+        if(student.getUtrNo()!=null) {
+        	return "redirect:/Successful";
+        }
         model.addAttribute("student", student);
         return "register";
     }
 
    @PostMapping("/register")
 public String submitRegister(HttpServletRequest request,
-                             @RequestParam("paymentImage") MultipartFile file) {
+                             @RequestParam("paymentImage") MultipartFile file,
+                             Model model, RedirectAttributes attributes) {
 
     // Fetch session student
     Users existingStudent = (Users) session.getAttribute("NewStudent");
@@ -130,42 +134,57 @@ public String submitRegister(HttpServletRequest request,
         return "redirect:/login";
     }
 
-    // Instead of creating new user, update the existing one
     Users user = existingStudent;
 
-    // Update fields from form
-    user.setName(request.getParameter("name"));
-    user.setProgram(request.getParameter("program"));
-    user.setBranch(request.getParameter("branch"));
-    user.setEmail(request.getParameter("email"));
-    user.setContactNo(request.getParameter("contactNo"));
-    user.setFatherName(request.getParameter("fatherName"));
-    user.setMotherName(request.getParameter("motherName"));
-    user.setAddress(request.getParameter("address"));
-    user.setUtrNo(request.getParameter("utrNo"));
+    try {
+        // Update fields from form
+        user.setName(request.getParameter("name"));
+        user.setProgram(request.getParameter("program"));
+        user.setBranch(request.getParameter("branch"));
+        user.setEmail(request.getParameter("email"));
+        user.setContactNo(request.getParameter("contactNo"));
+        user.setFatherName(request.getParameter("fatherName"));
+        user.setMotherName(request.getParameter("motherName"));
+        user.setAddress(request.getParameter("address"));
+        user.setUtrNo(request.getParameter("utrNo"));
+        user.setGender(request.getParameter("gender"));
+        user.setYear(request.getParameter("year")); // readonly
 
-    // Handle file upload
-    if (file != null && !file.isEmpty()) {
-        try {
+        // Handle file upload
+        if (file != null && !file.isEmpty()) {
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
                     ObjectUtils.asMap("folder", "payment_images"));
             String imageUrl = uploadResult.get("secure_url").toString();
             user.setPaymentImage(imageUrl);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        // Save the updated user
+        userRepo.save(user);
+
+        // Update session
+        session.setAttribute("NewStudent", user);
+
+        // Success message (optional)
+        attributes.addAttribute("msg", "Registration completed successfully!");
+        return "redirect:/Successful";
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Error message to display in form
+        attributes.addAttribute("msg", "Something went wrong during registration. Please try again.");
+        model.addAttribute("student", user); // keep form filled
+        return "register"; // return back to form page
     }
-
-    // Save the updated user (Hibernate will update existing record)
-    userRepo.save(user);
-
-    // Update session
-    session.setAttribute("NewStudent", user);
-
-    return "redirect:/login";
 }
 
 
+   @GetMapping("/Successful")
+   public String showSuccessful(HttpSession session) {
+	   if(session.getAttribute("NewStudent") == null) {
+		   return "redirect:/login";
+	   }
+	   return "Successful";
+   }
 
 
     @GetMapping("/forgot-password")
@@ -209,7 +228,7 @@ public Map<String,String> submitEnquiry(@RequestParam String name,
     return resp;
 }
   
-
+    
 
 
 }

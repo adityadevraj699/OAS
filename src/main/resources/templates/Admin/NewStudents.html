@@ -44,8 +44,12 @@
               <td th:text="${student.year}">Year</td>
               <td>
                 <a th:if="${student.paymentImage != null}" 
-   th:href="${student.paymentImage}" 
-   target="_blank">View</a>
+   th:href="@{/Admin/ViewPayment(id=${student.id})}" 
+   class="btn btn-sm btn-success">
+   View Payment
+</a>
+
+
 
                 <span th:if="${student.paymentImage == null}">N/A</span>
               </td>

@@ -133,6 +133,70 @@ public class AdminController {
 
 	    return "redirect:/Admin/NewStudents";
 	}
+	
+	
+	@GetMapping("/ManageStudents")
+	public String ShowManageStudents(Model model)
+	{
+		if (session.getAttribute("loggedInAdmin") ==null) {
+			return "redirect:/login";
+		}
+		
+		List<Users> newStudents = userRepo.findAllByRoleAndStatusOrStatus(UserRole.STUDENT, UserStatus.APPROVED, UserStatus.DISABLED);
+		model.addAttribute("newStudents", newStudents);
+		return "Admin/ManageStudents";
+	}
+	
+	@GetMapping("/ViewPayment")
+	public String showViewPayment(@RequestParam("id") long id, RedirectAttributes attr, Model model) {
+	    if (session.getAttribute("loggedInAdmin") == null) {
+	        return "redirect:/login";
+	    }
+	    try {
+	        Users student = userRepo.findById(id)
+	                .orElseThrow(() -> new IllegalArgumentException("Invalid student ID: " + id));
+	        model.addAttribute("student", student);
+	        return "Admin/ViewPayment";	    } catch (Exception e) {
+	        attr.addFlashAttribute("msg", "Something Went Wrong!");
+	        return "redirect:/Admin/NewStudents"; // <-- fixed typo
+	    }
+	}
+
+	
+	@GetMapping("/ViewPayments")
+	public String showViewPayments(@RequestParam("id") long id, RedirectAttributes attr, Model model) {
+	    if (session.getAttribute("loggedInAdmin") == null) {
+	        return "redirect:/login";
+	    }
+	    try {
+	        Users student = userRepo.findById(id)
+	                .orElseThrow(() -> new IllegalArgumentException("Invalid student ID: " + id));
+	        model.addAttribute("student", student);
+	        return "Admin/ViewPayments";	    } catch (Exception e) {
+	        attr.addFlashAttribute("msg", "Something Went Wrong!");
+	        return "redirect:/Admin/ManageStudents"; // <-- fixed typo
+	    }
+	}
+
+	
+	@GetMapping("/UpdateStatus")
+	public String updateStatus(@RequestParam long id,
+	                           @RequestParam String status,
+	                           RedirectAttributes redirectAttributes) {
+	    Users user = userRepo.findById(id)
+	        .orElseThrow(() -> new IllegalArgumentException("Invalid ID: " + id));
+
+	    try {
+	        Users.UserStatus newStatus = Users.UserStatus.valueOf(status);
+	        user.setStatus(newStatus);
+	        userRepo.save(user);
+	        redirectAttributes.addFlashAttribute("statusUpdate", "Status updated to " + newStatus);
+	    } catch (IllegalArgumentException ex) {
+	        redirectAttributes.addFlashAttribute("statusUpdate", "Invalid status value!");
+	    }
+
+	    return "redirect:/Admin/ManageStudents"; // लिस्ट पेज पर वापस जाएँ
+	}
 
 	
 	

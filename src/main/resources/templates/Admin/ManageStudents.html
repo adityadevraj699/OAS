@@ -1,0 +1,152 @@
+<html th:replace="~{Admin/Adminbase::layout(~{::section})}">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="m-0 p-0" 
+      style="background: linear-gradient(to right, #6a11cb, #2575fc); min-height:100vh; display:flex; align-items:center; justify-content:center;">
+
+  <section class="w-100 py-5">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h4 class="text-center text-white m-0">Manage New Students</h4>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Sr. No.</th>
+											<th>Enrollment No</th>
+											<th>Name</th>
+											<th>Gender</th>
+											<th>F'Name</th>
+											<th>M'Name</th>
+											<th>Contact No</th>
+											<th>Email</th>
+											<th>Course</th>
+											<th>Branch</th>
+											<th>Year</th> 
+											<th>Reg Date</th>
+											<th>Payment Reciept</th>
+											<th>UTR No.</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="student, srno : ${newStudents}">
+											<td th:text="${srno.index + 1}">Sr. No.</td>
+											<td th:text="${student.rollNo}">Enrollment No</td>
+											<td th:text="${student.name}">Name</td>
+											<td th:text="${student.gender == null ? 'No Records' : student.gender}">Gender</td>
+											<td th:text="${student.fatherName == null ? 'No Records' : student.fatherName}">F'Name</td>
+											<td th:text="${student.motherName == null ? 'No Records' : student.motherName}">M'Name</td>
+											<td th:text="${student.contactNo}">Contact No</td>
+											<td th:text="${student.email}">Email</td>
+											<td th:text="${student.program}">Course</td>
+											<td th:text="${student.branch}">Branch</td>
+											<td th:text="${student.year}">Year</td> 
+											<td th:text="${#temporals.format(student.regDate, 'dd-MM-yyyy HH:mm')}">Reg Date</td>
+											<td>
+  <!-- If payment image exists → show View button -->
+  <a th:if="${student.paymentImage != null}" 
+     th:href="@{/Admin/ViewPaymentsTUDENT(id=${student.id})}" 
+     class="btn btn-sm btn-success">
+     View Payment
+  </a>
+
+  <!-- If no image → show fallback text -->
+  <span th:if="${student.paymentImage == null}">
+    No Records
+  </span>
+</td>
+
+											<td th:text="${student.utrNo == null ? 'No Records' : student.utrNo}">UTR No.</td>
+											<td>
+  <a href="#"
+     class="btn btn-sm status-btn"
+     th:classappend="${student.status.name()=='APPROVED' ? 'btn-success' : 'btn-danger'}"
+     th:text="${student.status}"
+     th:data-url="@{/Admin/UpdateStatus(id=${student.id})}">
+     Pending
+  </a>
+</td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- SweetAlert2 Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ===== Status change buttons =====
+  const statusButtons = document.querySelectorAll('.status-btn');
+  statusButtons.forEach(button => {
+    button.addEventListener('click', function (e) {
+      e.preventDefault();
+      const updateUrl = this.getAttribute('data-url');
+
+      Swal.fire({
+        title: 'Update Status',
+        input: 'select',
+        inputOptions: {
+          'PENDING': 'Pending',
+          'APPROVED': 'Approved',
+          'DISABLED': 'Disabled'
+        },
+        inputPlaceholder: 'Select a new status',
+        showCancelButton: true,
+        confirmButtonText: 'Update',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d'
+      }).then((result) => {
+        if (result.isConfirmed && result.value) {
+          const selectedStatus = result.value;
+          window.location.href = `${updateUrl}&status=${selectedStatus}`;
+        }
+      });
+    });
+  });
+
+  // ===== Backend message SweetAlert =====
+  const serverMessage = document.getElementById("serverMessage")?.value;
+  if (serverMessage && serverMessage.trim() !== "") {
+    const lowerMsg = serverMessage.toLowerCase();
+    const isError = lowerMsg.includes('invalid') || 
+                    lowerMsg.includes('not found') || 
+                    lowerMsg.includes('error') ||
+                    lowerMsg.includes('failed');
+
+    Swal.fire({
+      title: isError ? 'Error' : 'Success',
+      text: serverMessage,
+      icon: isError ? 'error' : 'success',
+      confirmButtonColor: '#2575fc',
+      background: '#f9f9f9',
+      color: '#333',
+      timer: 4000,
+      timerProgressBar: true
+    });
+  }
+});
+</script>
+
+<!-- Hidden input to pass backend message -->
+<input type="hidden" id="serverMessage" th:value="${statusUpdate}">
+
+
+  </section>
+</body>
+</html>
