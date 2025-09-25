@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.OAS.Model.Enquiry;
+import com.myproject.OAS.Model.StudyMaterial;
 import com.myproject.OAS.Model.Users;
 import com.myproject.OAS.Model.Users.UserRole;
 import com.myproject.OAS.Model.Users.UserStatus;
 import com.myproject.OAS.Repository.EnquiryRepository;
+import com.myproject.OAS.Repository.StudyMaterialRepository;
 import com.myproject.OAS.Repository.UserRepository;
+import com.myproject.OAS.Service.CloudinaryService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -37,6 +41,13 @@ public class AdminController {
 	
 	@Autowired
 	private EnquiryRepository enquiryRepo;
+	
+	
+	@Autowired
+	private StudyMaterialRepository studyMaterialRepo;
+	
+	@Autowired
+	private CloudinaryService cloudinaryService;
 
 	
 	
@@ -252,6 +263,43 @@ public class AdminController {
 		attributes.addFlashAttribute("msg", "Successfully Logout!");
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/UploadMaterial")
+	public String showUploadMaterial(Model model) {
+	    if (session.getAttribute("loggedInAdmin") == null) {
+	        return "redirect:/login";
+	    }
+	    StudyMaterial material = new StudyMaterial();
+	    model.addAttribute("material", material);
+	    return "Admin/UploadMaterial";
+	}
+
+	@PostMapping("/UploadMaterial")
+	public String uploadMaterial(@ModelAttribute("material") StudyMaterial material,
+	                             @RequestParam("file") MultipartFile file,
+	                             RedirectAttributes attributes) {
+	    try {
+	        String fileUrl = cloudinaryService.uploadFile(file);
+	        material.setFileUrl(fileUrl);
+	        material.setUploadedDate(LocalDateTime.now());
+
+	        studyMaterialRepo.save(material);
+
+	        attributes.addFlashAttribute("mgs", "Material uploaded successfully!");
+	        return "redirect:/Admin/UploadMaterial";
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        attributes.addFlashAttribute("mgs", "Failed to upload material!");
+	        return "redirect:/Admin/UploadMaterial";
+	    }
+	}
+
+
+	
+	
+	
+	
 	
 	
 	

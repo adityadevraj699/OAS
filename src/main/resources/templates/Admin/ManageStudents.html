@@ -54,7 +54,7 @@
 											<td>
   <!-- If payment image exists → show View button -->
   <a th:if="${student.paymentImage != null}" 
-     th:href="@{/Admin/ViewPaymentsTUDENT(id=${student.id})}" 
+     th:href="@{/Admin/ViewPayments(id=${student.id})}" 
      class="btn btn-sm btn-success">
      View Payment
   </a>
