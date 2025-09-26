@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{Student/Studentbase::layout(~{::main})}">
+<body>
+<main>
+ <h4 class="mb-4 text-danger">
+        <i class="fa-solid fa-file-lines"></i> Assignments
+    </h4>
+
+    <div class="row" th:if="${assignments != null}">
+        <div class="col-md-4 mb-4" th:each="assignment : ${assignments}">
+            <div class="card border-danger shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">
+                        <i class="fa-solid fa-file"></i> <span th:text="${assignment.subject}">Subject Name</span>
+                    </h5>
+                    <p class="card-text mb-1">
+                        <strong>Program:</strong> <span th:text="${assignment.program}">Program</span>
+                    </p>
+                    <p class="card-text mb-1">
+                        <strong>Branch:</strong> <span th:text="${assignment.branch}">Branch</span>
+                    </p>
+                    <p class="card-text mb-2">
+                        <strong>Year:</strong> <span th:text="${assignment.year}">Year</span>
+                    </p>
+                    <p class="card-text mb-2">
+                        <strong>Uploaded:</strong> <span th:text="${#temporals.format(assignment.uploadedDate, 'dd MMM yyyy HH:mm')}">Date</span>
+                    </p>
+                    <a th:href="@{${assignment.fileUrl}}" class="btn btn-danger mt-auto" target="_blank">
+                        <i class="fa-solid fa-download"></i> Download
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${assignments == null || #lists.isEmpty(assignments)}" class="card p-4">
+        <i class="fa-solid fa-circle-exclamation"></i> No assignments available at the moment 🚫.
+    </div>
+
+</main>
+</body>
+</html>

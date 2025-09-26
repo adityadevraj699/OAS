@@ -38,9 +38,8 @@ public class StudyMaterial {
 	private MaterialType materialType;
 	
 	public enum MaterialType{
-		Study_Material, Assignment
+		Study_Material, Assignment;
 	}
-
 	public long getId() {
 		return id;
 	}

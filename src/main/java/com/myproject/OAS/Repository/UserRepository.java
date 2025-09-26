@@ -23,5 +23,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
 	List<Users> findAllByRoleAndStatusOrStatus(UserRole student, UserStatus approved, UserStatus disabled);
 
+	long countByRole(UserRole student);
+
+	long countByRoleAndStatus(UserRole student, UserStatus pending);
+
 
 }

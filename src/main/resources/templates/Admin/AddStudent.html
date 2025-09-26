@@ -78,6 +78,37 @@
       </div>
     </div>
   </div>
+  
+  <input type="hidden" id="serverMessage" th:value="${mgs}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const serverMessage = document.getElementById("serverMessage")?.value;
+
+    if (serverMessage && serverMessage.trim() !== "") {
+        // Lowercase version for easy keyword matching
+        const lowerMsg = serverMessage.toLowerCase();
+
+        // Check for keywords that should be treated as errors
+        const isError = lowerMsg.includes('invalid') || 
+                        lowerMsg.includes('disabled') || 
+                        lowerMsg.includes('not found') ||
+                        lowerMsg.includes('error');
+
+        Swal.fire({
+            title: isError ? 'Error' : 'Success',
+            text: serverMessage,
+            icon: isError ? 'error' : 'success',
+            confirmButtonColor: '#2575fc',
+            background: '#f9f9f9',
+            color: '#333',
+            timer: 4000,
+            timerProgressBar: true
+        });
+    }
+});
+</script>
+  
 </main>
 </body>
 </html>

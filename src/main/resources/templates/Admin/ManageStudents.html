@@ -15,6 +15,22 @@
 						<div class="card-header bg-primary">
 							<h4 class="text-center text-white m-0">Manage New Students</h4>
 						</div>
+						
+						 <!-- Filter Inputs -->
+        <div class="card-body">
+          <div class="row mb-4 g-3">
+            <div class="col-md-4">
+              <input type="text" id="filterEnrollment" class="form-control" placeholder="Filter by Enrollment No">
+            </div>
+            <div class="col-md-4">
+              <input type="text" id="filterBranch" class="form-control" placeholder="Filter by Branch">
+            </div>
+            <div class="col-md-4">
+              <input type="text" id="filterYear" class="form-control" placeholder="Filter by Year">
+            </div>
+          </div>
+
+
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered">
@@ -84,7 +100,46 @@
 					</div>
 				</div>
 			</div>
-			
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const enrollmentInput = document.getElementById('filterEnrollment');
+    const branchInput = document.getElementById('filterBranch');
+    const yearInput = document.getElementById('filterYear');
+    const table = document.querySelector('table tbody');
+
+    function filterTable() {
+        const enrollmentVal = enrollmentInput.value.toLowerCase();
+        const branchVal = branchInput.value.toLowerCase();
+        const yearVal = yearInput.value.toLowerCase();
+
+        table.querySelectorAll('tr').forEach(row => {
+            const enrollment = row.children[1].textContent.toLowerCase();
+            const branch = row.children[9].textContent.toLowerCase();
+            const year = row.children[10].textContent.toLowerCase();
+
+            if (
+                enrollment.includes(enrollmentVal) &&
+                branch.includes(branchVal) &&
+                year.includes(yearVal)
+            ) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    // Event listeners for all filter inputs
+    enrollmentInput.addEventListener('input', filterTable);
+    branchInput.addEventListener('input', filterTable);
+    yearInput.addEventListener('input', filterTable);
+});
+</script>
+
+		
 			<!-- SweetAlert2 Library -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

@@ -1,7 +1,152 @@
 <html th:replace="~{Admin/Adminbase::layout(~{::main})}">
 <body>
 <main>
-<h1> This Is Admin DashBoard</h1>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Dashboard Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="text-primary">
+            <i class="fa-solid fa-tachometer-alt"></i> Admin Dashboard
+        </h4>
+        <a th:href="@{logout}" class="btn btn-outline-danger">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+
+    <!-- Cards Row -->
+    <div class="row mb-4">
+
+        <!-- Assignments Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100 border-danger">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-file-lines fa-3x text-danger mb-2"></i>
+                    <h5 class="card-title mt-2">Assignments</h5>
+                    <p class="card-text display-6" th:text="${assignmentCount}">0</p>
+                    <a href="Assignments" class="btn btn-danger btn-sm mt-2">
+                        <i class="fa-solid fa-file"></i> View
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Materials Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100 border-success">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-book-open fa-3x text-success mb-2"></i>
+                    <h5 class="card-title mt-2">Study Materials</h5>
+                    <p class="card-text display-6" th:text="${studyMaterialCount}">0</p>
+                    <a href="Materials" class="btn btn-success btn-sm mt-2">
+                        <i class="fa-solid fa-book"></i> View
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Students Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100 border-warning">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-user-clock fa-3x text-warning mb-2"></i>
+                    <h5 class="card-title mt-2">Pending Students</h5>
+                    <p class="card-text display-6" th:text="${pendingStudentCount}">0</p>
+                    <a href="NewStudents" class="btn btn-warning btn-sm mt-2">
+                        <i class="fa-solid fa-user"></i> View
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Students Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100 border-primary">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-users fa-3x text-primary mb-2"></i>
+                    <h5 class="card-title mt-2">Total Students</h5>
+                    <p class="card-text display-6" th:text="${totalStudentCount}">0</p>
+                    <a href="ManageStudents" class="btn btn-primary btn-sm mt-2">
+                        <i class="fa-solid fa-users"></i> View All
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enquiries Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100 border-info">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-question-circle fa-3x text-info mb-2"></i>
+                    <h5 class="card-title mt-2">Enquiries</h5>
+                    <p class="card-text display-6" th:text="${enquiryCount}">0</p>
+                    <a href="Enquiry" class="btn btn-info btn-sm mt-2">
+                        <i class="fa-solid fa-question"></i> View
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Enquiries Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <i class="fa-solid fa-table-list"></i> Recent Enquiries
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-striped table-hover">
+					    <thead class="table-primary">
+					        <tr>
+					            <th>#</th>
+					            <th>Name</th>
+					            <th>Email</th>
+					            <th>Contact</th>
+					            <th>Subject</th>
+					            <th>Message</th>
+					            <th>Date</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr th:each="enquiry, stat : ${recentEnquiries}">
+					            <td th:text="${stat.index + 1}">1</td>
+					            <td th:text="${enquiry.name}">John Doe</td>
+					            <td th:text="${enquiry.email}">john@example.com</td>
+					            <td th:text="${enquiry.contactNo}">+91-XXXXXXXXXX</td>
+					            <td th:text="${enquiry.subject}">Admission</td>
+					            <td th:text="${enquiry.message}">Sample enquiry message</td>
+					            <td th:text="${#temporals.format(enquiry.enquiryDate, 'dd MMM yyyy HH:mm')}">26 Sep 2025</td>
+					        </tr>
+					        <tr th:if="${#lists.isEmpty(recentEnquiries)}">
+					            <td colspan="7" class="text-center text-muted">No enquiries available</td>
+					        </tr>
+					    </tbody>
+					</table>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Motivational / Static Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-info">
+                        📌 Admin Tips
+                    </h5>
+                    <ul class="list-group list-group-flush mt-2">
+                        <li class="list-group-item">Keep student data updated regularly.</li>
+                        <li class="list-group-item">Monitor pending student registrations and approve them timely.</li>
+                        <li class="list-group-item">Check assignments and study materials for proper upload.</li>
+                        <li class="list-group-item">Respond to enquiries promptly for better communication.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 </body>
 </html>

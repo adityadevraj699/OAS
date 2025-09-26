@@ -12,3 +12,8 @@
   color: #fff; /* white separator */
   font-weight: normal;
 }
+
+
+*{
+ 	user-select: none;
+ 	}

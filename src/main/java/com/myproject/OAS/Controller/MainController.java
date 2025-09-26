@@ -80,7 +80,7 @@ public class MainController {
         		Users student = userRepo.findByRollNo(userID);
         		if(password.equals(student.getPassword()) && student.getRole().equals(UserRole.STUDENT)) {
         			if( student.getStatus().equals(UserStatus.APPROVED)) {
-        				session.setAttribute("loggedInstudent", student);
+        				session.setAttribute("loggedInStudent", student);
             			//System.out.println(" Valid Student");
             			return "redirect:/Student/Dashboard";
         			}

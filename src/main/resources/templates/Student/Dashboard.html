@@ -1,7 +1,107 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{Student/Studentbase::layout(~{::main})}">
 <body>
 <main>
-<h4> Student Dashboard</h4>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <!-- Dashboard Header -->
+    <div class="d-flex justify-content-between bg-white p-3 align-items-center mb-4">
+        <h4 class="text-primary">
+            <i class="fa-solid fa-tachometer-alt"></i> Student Dashboard
+        </h4>
+        <a th:href="@{logout}" class="btn btn-outline-danger">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+
+    <!-- Welcome Card -->
+    <div class="card mb-4 shadow-sm bg-light">
+        <div class="card-body">
+            <h4 class="card-title">👋 Welcome, <span th:text="${student.name}">Student Name</span>!</h4>
+            <p class="card-text">
+                Here’s a quick overview of your academic resources and activities. Stay updated and keep learning! 💡
+            </p>
+        </div>
+    </div>
+
+    <!-- Cards Row -->
+    <div class="row">
+
+        <!-- Profile Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 border-primary">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-user-circle fa-3x text-primary mb-2"></i>
+                    <h5 class="card-title mt-2">My Profile</h5>
+                    <p class="card-text">View your personal and academic details.</p>
+                    <a href="Profile" class="btn btn-primary btn-sm mt-2">
+                        <i class="fa-solid fa-eye"></i> View Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Material Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 border-success">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-book-open fa-3x text-success mb-2"></i>
+                    <h5 class="card-title mt-2">Study Materials</h5>
+                    <p class="card-text">
+                        <span th:text="${studymaterial}">0</span> available for you.
+                    </p>
+                    <a href="StudyMaterial" class="btn btn-success btn-sm mt-2">
+                        <i class="fa-solid fa-book"></i> View Materials
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assignment Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 border-danger">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-file-lines fa-3x text-danger mb-2"></i>
+                    <h5 class="card-title mt-2">Assignments</h5>
+                    <p class="card-text">
+                        <span th:text="${assignments}">0</span> pending assignments.
+                    </p>
+                    <a href="Assignment" class="btn btn-danger btn-sm mt-2">
+                        <i class="fa-solid fa-file"></i> View Assignments
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Static Info / Motivational Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-info">
+                        💡 Quick Tips for Students
+                    </h5>
+                    <ul class="list-group list-group-flush mt-2">
+                        <li class="list-group-item">Stay updated with your assignments and deadlines.</li>
+                        <li class="list-group-item">Regularly check study materials to strengthen your concepts.</li>
+                        <li class="list-group-item">Participate in discussions and collaborative learning.</li>
+                        <li class="list-group-item">Keep your profile information updated and accurate.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Motivational Quote -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-primary text-center shadow-sm" role="alert">
+                🌟 <strong>“Education is the most powerful weapon which you can use to change the world.”</strong> – Nelson Mandela
+            </div>
+        </div>
+    </div>
+
 </main>
 </body>
 </html>

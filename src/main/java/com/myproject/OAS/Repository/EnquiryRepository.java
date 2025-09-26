@@ -10,4 +10,6 @@ import com.myproject.OAS.Model.Users.UserStatus;
 
 public interface EnquiryRepository extends JpaRepository<Enquiry, Long> {
 
+	List<Enquiry> findTop5ByOrderByEnquiryDateDesc();
+
 }

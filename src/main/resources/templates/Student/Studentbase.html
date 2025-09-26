@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" th:fragment="layout(content)">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Admin Zone - OAS</title>
+<title>Student Zone - OAS</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -34,7 +34,7 @@
 	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header text-center">
-				<a href="Dashboard" class="logo"> OAS </a>
+				<a href="dashboard" class="logo"> OAS </a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button"
 					data-toggle="collapse" data-target="collapse"
 					aria-controls="sidebar" aria-expanded="false"
@@ -53,22 +53,22 @@
 						
 						<li class="nav-item dropdown">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> 
-							<!-- <img th:if="${session.loggedInAdmin.profilePic != null}" th:src="@{'/ProfilePic/'+${session.loggedInAdmin.profilePic}}" alt="user-img" width="36" class="img-circle">
-							<img th:if="${session.loggedInAdmin.profilePic == null}" src="../assets/img/profile2.jpg" alt="user-img" width="36" class="img-circle">
+							<!-- <img th:if="${session.loggedInStudent.profilePic != null}" th:src="@{'/ProfilePic/'+${session.loggedInStudent.profilePic}}" alt="user-img" width="36" class="img-circle">
+							<img th:if="${session.loggedInStudent.profilePic == null}" src="../assets/img/profile2.jpg" alt="user-img" width="36" class="img-circle">
 							 -->
-							<span th:text="${session.loggedInAdmin.name}"></span>
+							<span th:text="${session.loggedInStudent.name}"></span>
 						</a>
 							<ul class="dropdown-menu dropdown-user">
 								<li>
 									<div class="user-box">
 										<!-- <div class="u-img">
-											<img th:if="${session.loggedInAdmin.profilePic != null}" th:src="@{'/ProfilePic/'+${session.loggedInAdmin.profilePic}}" alt="user">
-											<img th:if="${session.loggedInAdmin.profilePic == null}" src="../assets/img/profile2.jpg" alt="user">
+											<img th:if="${session.loggedInStudent.profilePic != null}" th:src="@{'/ProfilePic/'+${session.loggedInStudent.profilePic}}" alt="user">
+											<img th:if="${session.loggedInStudent.profilePic == null}" src="../assets/img/profile2.jpg" alt="user">
 										</div>
 										 --><div class="u-text">
-											<h4 th:text="${session.loggedInAdmin.name}"></h4>
-											<p class="text-muted" th:text="${session.loggedInAdmin.email}">business@Agritrade.in</p>
-											<a href="ViewProfile" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+											<h4 th:text="${session.loggedInStudent.name}"></h4>
+											<p class="text-muted" th:text="${session.loggedInStudent.email}">business@Agritrade.in</p>
+											<!-- <a href="ViewProfile" class="btn btn-rounded btn-danger btn-sm">View Profile</a> -->
 										</div>
 									</div>
 								</li>
@@ -94,14 +94,14 @@
 			<div class="scrollbar-inner sidebar-wrapper">
 				<div class="user">
 					<!-- <div class="photo">
-						<img th:if="${session.loggedInAdmin.profilePic !=null}" th:src="@{'/ProfilePic/'+${session.loggedInAdmin.profilePic}}" src="../assets/img/profile.jpg" alt="user-img">
-						<img th:if="${session.loggedInAdmin.profilePic ==null}" src="../assets/img/profile2.jpg" alt="user-img">		
+						<img th:if="${session.loggedInStudent.profilePic !=null}" th:src="@{'/ProfilePic/'+${session.loggedInStudent.profilePic}}" src="../assets/img/profile.jpg" alt="user-img">
+						<img th:if="${session.loggedInStudent.profilePic ==null}" src="../assets/img/profile2.jpg" alt="user-img">		
 					</div>
 					 --><div class="info">
 						<a data-toggle="collapse" href="#collapseExample" aria-expanded="true"> 
 						<span>
-							<span th:text="${session.loggedInAdmin.name}"></span> 
-							<span class="user-level">Administrator</span>
+							<span th:text="${session.loggedInStudent.name}"></span> 
+							<span class="user-level">Student</span>
 								<!-- <span class="caret"></span> -->
 						</span>
 						</a>
@@ -115,41 +115,26 @@
 							<span class="badge badge-count"></span>
 						</a>
 					</li>
-					<li class="nav-item" th:classappend="${active2}">
-						<a class="nav-link" href="NewStudents" > 
-							<i class="la la-user-plus"></i>
-							<p style="white-space: nowrap;">New Students</p>
-							<span class="badge" style="font-size: 18px;"></span>
-						</a>
-					</li>
-					
-					<li class="nav-item" th:classappend="${active3}">
-						<a class="nav-link" href="ManageStudents" > 
-							<i class="la la-user-plus"></i>
-							<p>Manage Students</p>
-							<span class="badge" style="font-size: 18px;"></span>
-						</a>
-					</li>
 					
 					
 					 <li class="nav-item" th:classappend="${active5}">
-						<a href="AddStudent"> 
+						<a href="StudyMaterial"> 
 							<i class="la la-bell"></i>
-							<p>Add Student</p> 
+							<p>Study Material</p> 
 						</a>
 					</li>
 					
 					<li class="nav-item" th:classappend="${active6}">
-						<a href="UploadMaterial"> 
+						<a href="Assignment"> 
 							<i class="la la-bullhorn"></i>
-							<p>Upload Study Material</p> 
+							<p>Assignment</p> 
 						</a>
 					</li>
 					
 					<li class="nav-item" th:classappend="${active6}">
-						<a href="Enquiry"> 
-							<i class="la la-bullhorn"></i>
-							<p>Enquiries</p> 
+						<a href="Profile"> 
+							<i class="la la-user-plus"></i>
+							<p>View Profile</p> 
 							<!-- <span class="badge badge-success">3</span> -->
 						</a>
 					</li>
@@ -285,3 +270,4 @@
 	</script>
 </body>
 
+</html>

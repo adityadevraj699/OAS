@@ -6,6 +6,16 @@
     <div class="card-header bg-primary">
       <h4 class="text-center text-white m-0">Manage New Student</h4>
     </div>
+    
+    
+<!-- Filter Input -->
+<div class="row m-3">
+    <div class="col-md-4">
+        <input type="text" id="filterEnrollment" class="form-control" placeholder="Filter by Enrollment No">
+    </div>
+</div>
+
+
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -72,6 +82,24 @@
     </div>
   </div>
 </div>
+ <input type="hidden" id="serverMessage" th:value="${mgs}">
+ 
+ 
+ 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const filterInput = document.getElementById('filterEnrollment');
+    const tableBody = document.querySelector('table tbody');
+
+    filterInput.addEventListener('input', function () {
+        const value = this.value.toLowerCase();
+        tableBody.querySelectorAll('tr').forEach(row => {
+            const enrollment = row.children[1]?.textContent.toLowerCase() || '';
+            row.style.display = enrollment.includes(value) ? '' : 'none';
+        });
+    });
+});
+</script>
 
 <!-- SweetAlert2 Library -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -101,6 +129,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const serverMessage = document.getElementById("serverMessage")?.value;
+
+    if (serverMessage && serverMessage.trim() !== "") {
+        const lowerMsg = serverMessage.toLowerCase();
+        const isError = lowerMsg.includes('error') || lowerMsg.includes('invalid');
+
+        Swal.fire({
+            title: isError ? 'Error' : 'Success',
+            text: serverMessage,
+            icon: isError ? 'error' : 'success',
+            confirmButtonColor: '#2575fc',
+            timer: 4000,
+            timerProgressBar: true
+        });
+    }
+});
+
 </script>
 </main>
 </body>
